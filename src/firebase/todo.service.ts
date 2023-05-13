@@ -1,9 +1,7 @@
-import { collection, getDocs, doc, addDoc } from "firebase/firestore/lite";
+import { collection, getDocs, addDoc, doc } from "firebase/firestore/lite";
 import { firestoreDatabase } from "./firebase-app";
 
 const TODO_COLLECTION = "todos";
-// const todoCollection = collection(firestoreDatabase, TODO_COLLECTION);
-// const todoDocumentRef = doc(firestoreDatabase, TODO_COLLECTION);
 
 export const todoService = {
   getCollection: () => collection(firestoreDatabase, TODO_COLLECTION),
@@ -11,8 +9,12 @@ export const todoService = {
   getAll: async () => {
     const todoCollection = todoService.getCollection();
     const snapshot = await getDocs(todoCollection);
-    console.log("snapshot", snapshot.docs);
-    const todoList = snapshot.docs.map((doc) => doc.data());
+    const todoList = snapshot.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+      };
+    });
     console.log(todoList);
     return todoList as Todo[];
   },
@@ -20,7 +22,7 @@ export const todoService = {
     // const todoDocumentRef = todoService.getDocumentRef();
     const todoCollection = todoService.getCollection();
     const response = await addDoc(todoCollection, todo);
-    console.log("create success", response);
+    console.log("create success", response.id);
   },
 };
 
