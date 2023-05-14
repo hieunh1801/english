@@ -5,7 +5,6 @@ import {
   doc,
   getDoc,
   setDoc,
-  Timestamp,
   deleteDoc,
 } from "firebase/firestore/lite";
 import { firestoreDatabase } from "./firebase-app";

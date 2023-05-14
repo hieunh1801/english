@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTodoStore } from "./todo.store";
 import { Button, InputGroup } from "@blueprintjs/core";
-import { Timestamp } from "firebase/firestore/lite";
-import { Todo, TodoEditRequest } from "../firebase/todo.service";
+import { Todo } from "../firebase/todo.service";
 import { FetchStatus } from "../core/api.type";
 
 export const TodoListPage = () => {
@@ -93,8 +92,6 @@ export const TodoListPage = () => {
           });
         }}
         deleteTodo={(todo) => {
-          const { id, ...rest } = todo;
-
           deleteTodo(todo);
         }}
       />
